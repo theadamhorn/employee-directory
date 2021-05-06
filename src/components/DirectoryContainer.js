@@ -13,7 +13,7 @@ class DirectoryContainer extends Component {
 
   componentDidMount() {
     API.getUsers()
-      .then(data => this.setState({ employeeList: data.data.results, filteredList: data.data.results }))
+      .then(data => this.setState({ employeeList: data.data.results }))
       .catch(err => console.log(err));
   }
 
@@ -33,11 +33,11 @@ class DirectoryContainer extends Component {
 
     // Will have to filter through employee list in state and set filtered list to searched results
 
-    const results = employeeList.filter((employee) => employee.name.includes(this.state.searchInput))
-    // ^ employeeList is returning error of undefined
+    const results = this.state.employeeList.filter(employee => employee.name.includes(this.state.searchInput))
 
     this.setState({
-      searchInput: ""
+      searchInput: "",
+      filteredList: results
     });
   };
 

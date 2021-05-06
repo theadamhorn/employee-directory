@@ -3,7 +3,7 @@ import React from "react";
 function DirectoryItem(props) {
   return (
     <tr>
-      <td><img src={props.image}></img></td>
+      <td><img src={props.image} alt={"Photo of " + props.firstName + " " + props.lastName}></img></td>
       <td>{props.firstName}</td>
       <td>{props.lastName}</td>
       <td>{props.phone}</td>
