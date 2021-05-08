@@ -13,7 +13,7 @@ class DirectoryContainer extends Component {
 
   componentDidMount() {
     API.getUsers()
-      .then(data => this.setState({ employeeList: data.data.results }))
+      .then(data => this.setState({ employeeList: data.data.results, filteredList: data.data.results }))
       .catch(err => console.log(err));
   }
 
@@ -23,7 +23,7 @@ class DirectoryContainer extends Component {
 
     // Updating the input's state
     this.setState({
-      [name]: value
+      [name]: value.toLowerCase()
     });
   };
 
@@ -33,14 +33,15 @@ class DirectoryContainer extends Component {
 
     // Will have to filter through employee list in state and set filtered list to searched results
 
-    const results = this.state.employeeList.filter(employee => employee.name.includes(this.state.searchInput))
+    const filteredResults = this.state.employeeList.filter((employee) => employee.name.first.toLowerCase().includes(this.state.searchInput)
+      || employee.name.last.toLowerCase().includes(this.state.searchInput)
+      || employee.email.toLowerCase().includes(this.state.searchInput));
 
     this.setState({
       searchInput: "",
-      filteredList: results
+      filteredList: filteredResults
     });
   };
-
 
   render() {
     return (
@@ -60,7 +61,7 @@ class DirectoryContainer extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.employeeList.map(employee => (
+            {this.state.filteredList.map((employee) => (
               <DirectoryItem
                 image={employee.picture.thumbnail}
                 firstName={employee.name.first}
