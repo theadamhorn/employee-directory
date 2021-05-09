@@ -1,14 +1,19 @@
 import React, { Component } from "react";
 import DirectoryItem from "./DirectoryItem";
 import Search from "./Search";
+import Jumbotron from "./Jumbotron";
 import { Table } from "react-bootstrap";
 import API from "../utils/API";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowsAltV } from '@fortawesome/free-solid-svg-icons'
 
 class DirectoryContainer extends Component {
   state = {
     employeeList: [],
     searchInput: "",
-    filteredList: []
+    filteredList: [],
+    sortAscFirst: false,
+    sortAscLast: false
   };
 
   componentDidMount() {
@@ -31,7 +36,7 @@ class DirectoryContainer extends Component {
   handleFormSubmit = event => {
     event.preventDefault();
 
-    // Will have to filter through employee list in state and set filtered list to searched results
+    // filter through employee list in state and set filtered list to searched results
 
     const filteredResults = this.state.employeeList.filter((employee) => employee.name.first.toLowerCase().includes(this.state.searchInput)
       || employee.name.last.toLowerCase().includes(this.state.searchInput)
@@ -43,19 +48,85 @@ class DirectoryContainer extends Component {
     });
   };
 
+  firstNameSort = () => {
+    const employees = this.state.filteredList
+
+    if (this.state.sortAscFirst) {
+      this.setState({
+        filteredList: employees.reverse(),
+        sortAscFirst: false
+      })
+      return;
+    }
+
+    employees.sort(function (a, b) {
+      var nameA = a.name.first.toUpperCase(); // ignore upper and lowercase
+      var nameB = b.name.first.toUpperCase(); // ignore upper and lowercase
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+
+      // names must be equal
+      return 0;
+    });
+
+    this.setState({
+      filteredList: employees,
+      sortAscFirst: true
+    })
+  };
+
+  lastNameSort = () => {
+    const employees = this.state.filteredList
+
+    if (this.state.sortAscFirst) {
+      this.setState({
+        filteredList: employees.reverse(),
+        sortAscFirst: false
+      })
+      return;
+    }
+
+    employees.sort(function (a, b) {
+      var nameA = a.name.last.toUpperCase(); // ignore upper and lowercase
+      var nameB = b.name.last.toUpperCase(); // ignore upper and lowercase
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+
+      // names must be equal
+      return 0;
+    });
+
+    this.setState({
+      filteredList: employees,
+      sortAscFirst: true
+    })
+  }
+
   render() {
     return (
       <div>
+        <Jumbotron />
+
         <Search searchInput={this.state.searchInput}
           handleInputChange={this.handleInputChange}
           handleFormSubmit={this.handleFormSubmit} />
+
+        <button onClick={() => this.setState({ filteredList: this.state.employeeList })}>Refresh List</button>
 
         <Table striped bordered hover>
           <thead>
             <tr>
               <th>Headshot</th>
-              <th>First Name</th>
-              <th>Last Name</th>
+              <th>First Name <FontAwesomeIcon icon={faArrowsAltV} onClick={this.firstNameSort} /></th>
+              <th>Last Name <FontAwesomeIcon icon={faArrowsAltV} onClick={this.lastNameSort} /></th>
               <th>Phone Number</th>
               <th>Email</th>
             </tr>
@@ -63,7 +134,7 @@ class DirectoryContainer extends Component {
           <tbody>
             {this.state.filteredList.map((employee) => (
               <DirectoryItem
-                image={employee.picture.thumbnail}
+                image={employee.picture.medium}
                 firstName={employee.name.first}
                 lastName={employee.name.last}
                 phone={employee.phone}
@@ -72,7 +143,7 @@ class DirectoryContainer extends Component {
             ))}
           </tbody>
         </Table>
-      </div>
+      </div >
     );
   }
 }
