@@ -1,8 +1,9 @@
 import React from "react";
+import "./Search.css"
 
 function Search(props) {
   return (
-    <form className="form">
+    <form className="form m-2">
       <input
         value={props.searchInput}
         name="searchInput"
@@ -10,7 +11,7 @@ function Search(props) {
         type="text"
         placeholder="Search"
       />
-      <button onClick={props.handleFormSubmit}>Submit</button>
+      <button className="shadow-sm m-1 searchBtn" onClick={props.handleFormSubmit}>Submit</button>
     </form>
   );
 }

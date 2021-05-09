@@ -5,7 +5,8 @@ import Jumbotron from "./Jumbotron";
 import { Table } from "react-bootstrap";
 import API from "../utils/API";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowsAltV } from '@fortawesome/free-solid-svg-icons'
+import { faSort } from '@fortawesome/free-solid-svg-icons'
+import "./DirectoryContainer.css"
 
 class DirectoryContainer extends Component {
   state = {
@@ -119,14 +120,14 @@ class DirectoryContainer extends Component {
           handleInputChange={this.handleInputChange}
           handleFormSubmit={this.handleFormSubmit} />
 
-        <button onClick={() => this.setState({ filteredList: this.state.employeeList })}>Refresh List</button>
+        <button className="mx-2 mb-2 shadow-sm clearBtn" onClick={() => this.setState({ filteredList: this.state.employeeList })}>Clear Search</button>
 
         <Table striped bordered hover>
           <thead>
             <tr>
               <th>Headshot</th>
-              <th>First Name <FontAwesomeIcon icon={faArrowsAltV} onClick={this.firstNameSort} /></th>
-              <th>Last Name <FontAwesomeIcon icon={faArrowsAltV} onClick={this.lastNameSort} /></th>
+              <th>First Name <FontAwesomeIcon icon={faSort} onClick={this.firstNameSort} /></th>
+              <th>Last Name <FontAwesomeIcon icon={faSort} onClick={this.lastNameSort} /></th>
               <th>Phone Number</th>
               <th>Email</th>
             </tr>

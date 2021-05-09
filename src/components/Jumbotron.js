@@ -3,7 +3,7 @@ import "./Jumbotron.css";
 
 function Jumbotron() {
   return (
-    <div className="header display-3">Employee Directory</div>
+    <div className="header display-1">Employee Directory</div>
   );
 }
 

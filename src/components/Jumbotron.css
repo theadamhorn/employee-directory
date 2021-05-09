@@ -1,8 +1,11 @@
 .header {
-  background-color: #03849b;
-  height: 150px;
+  background: url("./images/oneill-banner.jpg");
+  height: 200px;
+  background-position: absolute;
   text-align: center;
   padding-top: 25px;
-  color:#f0ffff;
+  color:#ca0101;
+  margin-bottom: 5px;
+  
 }
 
